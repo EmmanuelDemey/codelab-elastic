@@ -4,6 +4,8 @@ services:
     build: ./front
     ports:
      - "80:80"
+    volumes:
+     - "./nginxlogs:/var/log/nginx"
   back:
     build: ./back
     ports:
