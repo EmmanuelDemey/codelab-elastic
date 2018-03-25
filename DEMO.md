@@ -103,3 +103,23 @@ mutate {
     remove_field => [ "message" ]
 }
 ```
+
+# Step 5
+
+We will add now the last beat of the day : Metricbeat for Docker container
+
+```shell
+docker-compose up
+sudo chown root config/metricbeat/metricbeat.yml
+sudo ./metricbeat -e -c config/metricbeat/metricbeat.yml
+```
+
+With the following configuration
+
+```yml
+metricbeat.modules:
+- module: docker
+  metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 10s
+```
