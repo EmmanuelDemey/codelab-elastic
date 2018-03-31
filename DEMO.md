@@ -113,97 +113,98 @@ mutate {
 
 # Step 5
 
-In this section we will reimplement the previous logstash configuration but with the built-in ingest feature. 
+In this section we will reimplement the previous logstash configuration but with the built-in ingest feature.
 
-We will first use the simulate API. 
+We will first use the simulate API.
 
-- Ingest a message without any processors
-
-'''shell
-POST http://localhost:9201/_ingest/pipeline/_simulate
-{
-  "pipeline" : {
-  	"processors": []
-  },
-  "docs" : [
-    { "_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
-  ]
-}
-'''
-- Add the grok processor
+* Ingest a message without any processors
 
 '''shell
 POST http://localhost:9201/_ingest/pipeline/_simulate
 {
-  "pipeline" : {
-  	"processors": [
-  		{
-	    	"grok": {
-	        	"field": "message",
-	        	"patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
-    		}
-    	}
-    ]
-  },
-  "docs" : [
-    { "_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
-  ]
+"pipeline" : {
+"processors": []
+},
+"docs" : [
+{ "\_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
+]
 }
 '''
 
-- Add the remove processor
+* Add the grok processor
 
 '''shell
 POST http://localhost:9201/_ingest/pipeline/_simulate
 {
-  "pipeline" : {
-  	"processors": [
-  		{
-	    	"grok": {
-	        	"field": "message",
-	        	"patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
-    		},
-    		"remove": {
-			    "field": "message"
-			  }
-    	}
-    ]
-  },
-  "docs" : [
-    { "_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
-  ]
+"pipeline" : {
+"processors": [
+{
+"grok": {
+"field": "message",
+"patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
+}
+}
+]
+},
+"docs" : [
+{ "\_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
+]
 }
 '''
 
-- Store the pipeline in ES
+* Add the remove processor
+
+'''shell
+POST http://localhost:9201/_ingest/pipeline/_simulate
+{
+"pipeline" : {
+"processors": [
+{
+"grok": {
+"field": "message",
+"patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
+},
+"remove": {
+"field": "message"
+}
+}
+]
+},
+"docs" : [
+{ "\_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
+]
+}
+'''
+
+* Store the pipeline in ES
 
 '''shell
 PUT http://localhost:9201/_ingest/pipeline/nginx
 {
-  	"processors": [
-  		{
-	    	"grok": {
-	        	"field": "message",
-	        	"patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
-    		},
-    		"remove": {
-			    "field": "message"
-			  }
-    	}
-    ]
-  }
+"processors": [
+{
+"grok": {
+"field": "message",
+"patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
+},
+"remove": {
+"field": "message"
+}
+}
+]
+}
 '''
 
-- Use the previous stored pipeline when indexing a new document
+* Use the previous stored pipeline when indexing a new document
 
 '''shell
 PUT http://localhost:9201/my-index/_doc/my-id?pipeline=nginx
 { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"}
-```
 
+````
 ```shell
 GET http://localhost:9201/my-index/_doc/my-id
-```
+````
 
 # Step 6
 
@@ -229,16 +230,16 @@ metricbeat.modules:
 
 We will now add some Security to our cluster
 
-- First change the ES docker used in order to use the one with XPack enabled
-- Define the environnement variable for the password used for ES (used changeme, the one used by default by Kibana)
+* First change the ES docker used in order to use the one with XPack enabled
+* Define the environnement variable for the password used for ES (used changeme, the one used by default by Kibana)
 
 ```shell
 environment:
       - ELASTIC_PASSWORD=changeme
 ```
 
-- Log in to kibana and present the new securty page
-- index  one fake document that will use to present the fields filtering
+* Log in to kibana and present the new securty page
+* index one fake document that will use to present the fields filtering
 
 ```shell
 POST devoxx_indices/_doc/1
@@ -248,33 +249,33 @@ POST devoxx_indices/_doc/1
 }
 ```
 
-- Create a simple dashboard with a saved search
+* Create a simple dashboard with a saved search
 
-- Create a user manu with the kibana dashboard only role
+* Create a user manu with the kibana dashboard only role
 
-- Log in with this account and check if we only have access to the dashboard page... But we have no data :(
+* Log in with this account and check if we only have access to the dashboard page... But we have no data :(
 
-- Create a role devoxx-reader with read right on the devoxx-reader indice, and remove the secret field of each document
+* Create a role devoxx-reader with read right on the devoxx-reader indice, and remove the secret field of each document
 
-- Check if the role has been created
+* Check if the role has been created
 
 ```shell
 GET /_xpack/security/role
 ```
 
-- Assign this role to the user manu
+* Assign this role to the user manu
 
-- Log in again and normally we should have access to the right data
+* Log in again and normally we should have access to the right data
 
-- Add a lastName field to the document. Manu should not be able to see this field
+* Add a lastName field to the document. Manu should not be able to see this field
 
-- Get the role thanks to the REST API
+* Get the role thanks to the REST API
 
 '''shell
-GET /_xpack/security/role
+GET /\_xpack/security/role
 '''
 
-- Add the lastName field to the configuration
+* Add the lastName field to the configuration
 
 ```shell
 POST /_xpack/security/role/devoxx-reader
@@ -304,6 +305,78 @@ POST /_xpack/security/role/devoxx-reader
   }
 ```
 
-- Check thanks to the Kibana UI if this modification is enabled
+* Check thanks to the Kibana UI if this modification is enabled
 
-- Check the Kibana UI with Manu
+* Check the Kibana UI with Manu
+
+# Step 8 - Alerting
+
+We will now add alerts in our plateform. We will send alerts if we have less than 10 request in the last 5 mn .
+
+* Add username/password to filebeat (kibana option)
+
+'''
+setup.kibana:
+host: "localhost:5601"
+username: "elastic"
+password: "changeme"
+'''
+
+* Add username/password to Logstash
+
+```shell
+elasticsearch {
+      hosts => ["localhost:9200"]
+      user => elastic
+      password => changeme
+  }
+```
+
+* In the admin part, add the watcher. For the demo, we will only send a log
+* Display log for the Elasticsearch cluster
+
+```
+docker-compose logs -f elasticsearch
+```
+
+* In order to see the payload of a watcher, use first this log and have a look to the logs
+
+```
+Votre site n'a pas beaucoup de visiteurs ({{ctx}})
+```
+
+* Show the History page of a watcher.
+
+* From the Devtools, execute the following request
+
+```
+GET _xpack/watcher/watch/<ID of the watcher>
+
+GET .watcher-history*/_search?pretty
+{
+  "query": {
+            "match": {
+              "metadata.name": "devoxx"
+            }
+          }
+
+}
+```
+
+* Create a quick Counter in order to show the number of alerts.
+
+# Step 9 - APM
+
+And what if we monitor our NodeJS server now? We will use the APM feature of the Elastic stack
+
+* Start docker-compose without the back
+* Start the back with nodemon in order to have hot reload
+* Go the the home page of kibana in order to see how we can enable APM
+* Configure the APM server and start it
+* Open kibana and check the available dashboards
+* Install the NPM dependency
+* Add the setup code in the Express serveur
+* Show the result in Kibana
+* Add a addFilter with a console.log of the payload
+* Add nested call to the weather endpoint in order to see multiple spans in a transactions
+* Add a custom span with just a simple sleep
