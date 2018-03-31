@@ -75,6 +75,9 @@ sudo chown root config/filebeat/filebeat.yml
 sudo ./filebeat -e -c config/filebeat/filebeat.yml
 ```
 
+* Add the corresponding index into Kibana and have a look to the data
+* Create a time serie in order to visualize the number of request by seconds
+
 # Step 4
 
 We will now add Logstash in order to ngrok the log indexed by filebeat
