@@ -9,8 +9,8 @@ docker-compose up
 We have many routes :
 
 * GET http://localhost:8080/rest/products
-* GET http://localhost:8080/fake/url returing 404
-* GET http://localhost:8080/long/task returing 200 after 5s
+* GET http://localhost:8080/rest/fake/url returning 404
+* GET http://localhost:8080/test/long/task returing 200 after 5s
 * GET http://localhost:8080/rest/weather calling an external service
 
 # Step 1
@@ -36,6 +36,14 @@ And run the following command
 ```shell
 docker-compose up
 ```
+
+* Have a look to the response of GET http://localhost:9200 to check if the cluster isUP
+* Open Kibana and show the basic features :
+  * Search
+  * Visualizations
+  * Dashboard
+  * Devtools
+* Index a simple document, and check you retrieve this document in a search, and in a visualization
 
 # Step 2
 
