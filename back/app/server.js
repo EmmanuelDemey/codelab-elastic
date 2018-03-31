@@ -4,6 +4,7 @@ const http = require("http");
 const uuid = require("node-uuid");
 const cors = require("./cors");
 const weather = require("weather-js");
+const bodyParser = require("body-parser");
 
 const app = express();
 const server = http.createServer(app);
@@ -21,7 +22,7 @@ const port = process.env.PORT || 8080;
 
 app.use(require("morgan")("dev"));
 
-app.use(express.bodyParser());
+app.use(bodyParser.json());
 app.use(cors);
 
 app.get(context + "/products", function(req, res) {
