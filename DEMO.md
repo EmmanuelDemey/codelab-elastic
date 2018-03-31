@@ -268,7 +268,7 @@ environment:
 ```
 
 * Log in to kibana and present the new securty page
-* index one fake document that will use to present the fields filtering
+* index one fake document that will be used to present fields filtering
 
 ```shell
 POST devoxx_indices/_doc/1
