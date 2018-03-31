@@ -100,6 +100,14 @@ sudo ./filebeat -e -c config/filebeat/filebeat.yml
 
 We will start with an easy logstash configuration file with only the beats input and elasticsearch and stdout outputs
 
+```shell
+input { beats { port => "5044" } }
+output {
+  elasticsearch { hosts => ["localhost:9200"] }
+  stdout { codec => rubydebug }
+}
+```
+
 Then we will add filters :
 
 * grok
@@ -127,6 +135,10 @@ mutate {
     remove_field => [ "message" ]
 }
 ```
+
+* We will debug the result of this configuration file via the stdout output
+* Check the data indexed in Elasticsearch
+* Show the Grok Debugger
 
 # Step 5
 
