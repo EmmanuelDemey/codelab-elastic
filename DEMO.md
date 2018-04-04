@@ -101,9 +101,9 @@ java -jar injector-6.0.jar 1000000 10000
 
 # Step 2
 
-We can explain first the content of the `packetbeat.yml` file
+We can explain first the content of the `packetbeat.yml` file.
 
-In order to start you should executed the following commands :
+In order to start run:
 
 ```shell
 docker-compose up
