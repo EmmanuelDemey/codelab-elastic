@@ -10,44 +10,88 @@ We have many routes :
 
 * GET http://localhost:8080/rest/products
 * GET http://localhost:8080/rest/fake/url returning 404
-* GET http://localhost:8080/test/long/task returing 200 after 5s
+* GET http://localhost:8080/rest/long/task returing 200 after 5s
 * GET http://localhost:8080/rest/weather calling an external service
 
 # Step 1
 
-In order to setup Elasticsearch and Kibana in our project, you need to add these extra lines in your docker-compose file
+In order to setup Elasticsearch and Kibana in our project, you need to add these extra lines in your `docker-compose.yml` file:
 
 ```yml
 elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
     ports:
         - 9200:9200
         - 9300:9300
 kibana:
-    image: docker.elastic.co/kibana/kibana:6.2.2
+    image: docker.elastic.co/kibana/kibana:6.2.3
     depends_on:
         - elasticsearch
     ports:
         - 5601:5601
 ```
 
-And run the following command
+And run the following command:
 
 ```shell
 docker-compose up
 ```
 
-* Have a look to the response of GET http://localhost:9200 to check if the cluster isUP
-* Open Kibana and show the basic features :
+* Have a look to the response of GET http://localhost:9200 to check if the cluster is UP
+* Open Kibana and show the developer Console
+* Index a simple document, and check you retrieve this document in a search:
+
+```
+DELETE devoxxfr2018
+PUT cars/_doc/1
+{
+  "model": "c3",
+  "manufacturer": "Citroen"
+}
+# Index many of them
+POST cars/_doc
+{
+  "model": "c3",
+  "manufacturer": "Citroen"
+}
+# Index many of them
+POST cars/_doc
+{
+  "model": "zoe",
+  "manufacturer": "Renault"
+}
+GET cars/_doc/1
+GET cars/_search?q=citroen
+GET cars/_search
+{
+  "query": {
+    "match": {
+      "manufacturer": "citroen"
+    }
+  }
+}
+GET cars/_doc/_search
+{
+  "size": 0,
+  "aggs" : {
+    "manufacturers_aggs" : { 
+      "terms" : { 
+        "field" : "manufacturer.keyword"
+      }
+    }
+  }
+}
+```
+
+* Open Kibana and show the basic features:
   * Search
   * Visualizations
   * Dashboard
-  * Devtools
-* Index a simple document, and check you retrieve this document in a search, and in a visualization
+* Search within the Discovery page for Citroen
 
 # Step 2
 
-We can explain first the content of the packetbeat.yml file
+We can explain first the content of the `packetbeat.yml` file
 
 In order to start you should executed the following commands :
 
