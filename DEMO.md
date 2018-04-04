@@ -22,7 +22,6 @@ elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
     ports:
         - 9200:9200
-        - 9300:9300
 kibana:
     image: docker.elastic.co/kibana/kibana:6.2.3
     depends_on:
