@@ -42,7 +42,7 @@ docker-compose up
 * Index a simple document, and check you retrieve this document in a search:
 
 ```
-DELETE devoxxfr2018
+DELETE cars
 PUT cars/_doc/1
 {
   "model": "c3",
