@@ -97,6 +97,8 @@ java -jar injector-6.0.jar 1000000 10000
   * Visualizations
   * Dashboard
 
+* Import the pre-built dashboard available in `config/kibana` dir and open it.
+
 # Step 2
 
 We can explain first the content of the `packetbeat.yml` file
