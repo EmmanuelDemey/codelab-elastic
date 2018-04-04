@@ -83,11 +83,19 @@ GET cars/_doc/_search
 }
 ```
 
+* Index 1m documents with:
+
+```sh
+# Get the injector if not downloaded yet
+wget https://download.elastic.co/workshops/basic-kibana/injector/injector-6.0.jar
+# Insert 1m persons randomly generated
+java -jar injector-6.0.jar 1000000 10000
+```
+
 * Open Kibana and show the basic features:
   * Search
   * Visualizations
   * Dashboard
-* Search within the Discovery page for Citroen
 
 # Step 2
 
