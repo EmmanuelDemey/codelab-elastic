@@ -202,7 +202,7 @@ We will first use the simulate API.
 
 * Ingest a message without any processors
 
-'''shell
+```shell
 POST http://localhost:9201/_ingest/pipeline/_simulate
 {
 "pipeline" : {
@@ -212,11 +212,11 @@ POST http://localhost:9201/_ingest/pipeline/_simulate
 { "\_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
 ]
 }
-'''
+```
 
 * Add the grok processor
 
-'''shell
+```shell
 POST http://localhost:9201/_ingest/pipeline/_simulate
 {
 "pipeline" : {
@@ -233,11 +233,11 @@ POST http://localhost:9201/_ingest/pipeline/_simulate
 { "\_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
 ]
 }
-'''
+```
 
 * Add the remove processor
 
-'''shell
+```shell
 POST http://localhost:9201/_ingest/pipeline/_simulate
 {
 "pipeline" : {
@@ -257,11 +257,11 @@ POST http://localhost:9201/_ingest/pipeline/_simulate
 { "\_source": { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"} }
 ]
 }
-'''
+```
 
 * Store the pipeline in ES
 
-'''shell
+```shell
 PUT http://localhost:9201/_ingest/pipeline/nginx
 {
 "processors": [
@@ -276,18 +276,18 @@ PUT http://localhost:9201/_ingest/pipeline/nginx
 }
 ]
 }
-'''
+```
 
 * Use the previous stored pipeline when indexing a new document
 
-'''shell
+```shell
 PUT http://localhost:9201/my-index/_doc/my-id?pipeline=nginx
 { "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"}
+```
 
-````
 ```shell
 GET http://localhost:9201/my-index/_doc/my-id
-````
+```
 
 # Step 6
 
