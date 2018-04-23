@@ -28,4 +28,4 @@ sudo bin/filebeat -e -c config/filebeat/filebeat.yml
 
 ## Next step
 
-Look at [branch step4-demo-logstash](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step4-demo-logstash)
+Look at [step4-demo-logstash](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step4)

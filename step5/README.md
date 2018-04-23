@@ -132,4 +132,4 @@ bin/ingest-convert.sh --input=file:///tmp/devoxx-universite-elastic/config/inges
 
 ## Next step
 
-Look at [branch step6-demo-metricbeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step6-demo-metricbeat)
+Look at [step6-demo-metricbeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step6)

@@ -83,4 +83,4 @@ POST /_xpack/security/role/devoxx-reader
 
 ## Next step
 
-[branch step9-alerting](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step9-alerting
+Look at [step9-alerting](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step9)

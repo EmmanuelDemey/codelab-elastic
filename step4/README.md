@@ -177,4 +177,4 @@ ab -n 100000 -c 1 http://127.0.0.1:80/index.html
 
 ## Next step
 
-Look at [branch step5-demo-ingest](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step5-demo-ingest)
+Look at [step5-demo-ingest](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step5)

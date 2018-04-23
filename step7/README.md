@@ -27,4 +27,4 @@ bin/apm-server -e -c config/apm/apm-server.yml
 
 ## Next step
 
-step7-demo-securitystep1-setup-elaticsearch-kibana](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step7-demo-security)
+Look at [step8-demo-securitystep1-setup-elaticsearch-kibana](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step8)

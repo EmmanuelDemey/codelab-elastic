@@ -34,4 +34,4 @@ sudo bin/packetbeat -e -c config/packetbeat/packetbeat.yml
 
 ## Next step
 
-Look at [branch step3-demo-filebeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step3-demo-filebeat)
+Look at [step3-demo-filebeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step3)

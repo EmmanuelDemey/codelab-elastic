@@ -33,4 +33,4 @@ metricbeat.modules:
 
 ## Next step
 
-Look at [branch step10-apm](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step10-apm)
+Look at [step7-apm](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step7)

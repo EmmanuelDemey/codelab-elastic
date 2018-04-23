@@ -20,4 +20,4 @@ docker-compose up
 
 ## Next step
 
-Look at [branch step1-setup-elaticsearch-kibana](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step1-setup-elaticsearch-kibana)
+Look at [step1-setup-elaticsearch-kibana](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step1)

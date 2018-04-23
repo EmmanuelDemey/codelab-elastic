@@ -91,4 +91,4 @@ java -jar injector-6.0.jar 1000000 10000
 
 ## Next step
 
-Look at [branch step2-demo-packetbeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/step2-demo-packetbeat)
+Look at [step2-demo-packetbeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step2)
