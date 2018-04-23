@@ -1,0 +1,25 @@
+version: '3'
+services:
+  front:
+    build: ./front
+    ports:
+     - "80:80"
+    volumes:
+     - "./nginxlogs:/var/log/nginx"
+  back:
+    build: ./back
+    ports:
+     - "8080:8080"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-platinum:6.2.3
+    environment:
+      - ELASTIC_PASSWORD=changeme
+    ports:
+      - 9200:9200
+      - 9300:9300
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.3
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601

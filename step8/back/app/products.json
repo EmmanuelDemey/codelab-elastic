@@ -1,0 +1,6 @@
+[
+  {"title": "Z-Product 1", "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", "photo": "http://placehold.it/800x500", "price": 10, "stock": 2},
+  {"title": "B-Product 2", "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", "photo": "http://placehold.it/800x500", "price": 20, "stock": 2},
+  {"title": "C-Product 3", "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", "photo": "http://placehold.it/800x500", "price": 30, "stock": 2},
+  {"title": "D-Product 4", "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", "photo": "http://placehold.it/800x500", "price": 40, "stock": 2}
+]

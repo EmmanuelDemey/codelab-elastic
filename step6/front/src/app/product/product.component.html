@@ -1,0 +1,12 @@
+<div class="col-md-3 col-sm-6 hero-feature">
+  <div class="thumbnail" [ngClass]="{last: isTheLast()}">
+    <img [src]="data.photo" alt="">
+    <div class="caption">
+      <h3>{{data.title}} - {{data.price}}€</h3>
+      <p>{{data.description}}</p>
+      <p>
+        <button class="btn btn-primary" (click)="addToBasketClick()">Ajoutez au panier</button>
+      </p>
+    </div>
+  </div>
+</div>
