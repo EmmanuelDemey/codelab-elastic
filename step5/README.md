@@ -1,38 +1,22 @@
-# Step 9 - Alerting
+# Step 5 - Alerting
 
 We will now add alerts in our plateform. We will send alerts if we have less than 10 request in the last 5 mn .
 
 * Add username/password to filebeat (kibana option)
 
-'''
+```
 setup.kibana:
 host: "localhost:5601"
 username: "elastic"
 password: "changeme"
-'''
-
-* Add username/password to Logstash
-
-```shell
-elasticsearch {
-      hosts => ["localhost:9200"]
-      user => elastic
-      password => changeme
-  }
 ```
 
-* In the admin part, add the watcher. For the demo, we will only send a log
-* Display log for the Elasticsearch cluster
+* In the admin part of Kibana, add a watcher. For the demo, we will only send a log message to the console
 
-```
-docker-compose logs -f elasticsearch
-```
-
-* In order to see the payload of a watcher, use first this log and have a look to the logs
-
-```
-Votre site n'a pas beaucoup de visiteurs ({{ctx}})
-```
+  * We won't create the Watcher thanks to an HTTP request. We will use the dedicated Kibana UI (threshold watch)
+    * Name this watcher `nightclazz`
+    * This watcher should use index pattern `filebeat-*`.
+    * If we have less than 10 requests in the last 5mn, we should logs this message : Votre site n'a pas beaucoup de visiteurs (XXX), with XXX the number of visits
 
 * Show the History page of a watcher.
 
@@ -45,7 +29,7 @@ GET .watcher-history*/_search?pretty
 {
   "query": {
             "match": {
-              "metadata.name": "devoxx"
+              "metadata.name": "nightclazz"
             }
           }
 
