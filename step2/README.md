@@ -1,37 +1,36 @@
-# Step 2 - Add Packetbeat
+# Step 6 - Monitor our Docke images
 
-We will now add Packetbeat to our plateform.
+We will add now the last beat of the day : Metricbeat for for Docker containers
 
-* Download Packetbeat
+* Download Metricbeat
 
 ```shell
-curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.2.3-darwin-x86_64.tar.gz
-tar xzvf packetbeat-6.2.3-darwin-x86_64.tar.gz
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.2.3-darwin-x86_64.tar.gz
+tar xzvf metricbeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-* Create the packetbeat.yml configuration file
+* Create the metricbeat.yml configuration file
 
-In order to start Packetbeat, you should executed the following commands :
+In order to start you should executed the following commands :
 
 ```shell
 docker-compose up
-sudo chown root config/packetbeat/packetbeat.yml
-sudo bin/packetbeat -e -c config/packetbeat/packetbeat.yml
+sudo chown root config/metricbeat/metricbeat.yml
+sudo bin/metricbeat -e -c config/metricbeat/metricbeat.yml
 ```
 
-* You can now have a look to the HTTP dashboard
+With the following configuration
 
-  * Explain Overview and Web Transactions Dashbaord
-  * Show the vizualisations and searches
-  * Show the filter feature
-  * Autorefresh
-  * Date Picker
-  * Filter on a dashboard and check the result in the Discover Panel
-  * Show the template that has been created
+```yml
+metricbeat.modules:
+- module: docker
+  metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 10s
+```
 
-* Extra:
-  * Explain that everything in Kibana are just Elastic documents : Dashboard, Visualizations,...
+* Open Kibana and present the differents dashboards
 
 ## Next step
 
-Look at [step3-demo-filebeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step3)
+Look at [step3 APM](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step3)

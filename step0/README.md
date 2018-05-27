@@ -1,23 +1,135 @@
-# Step 0 - Our Angular / NodeJS application
+# Step 5 - Ingest our logs with Elasticsearch
 
-Our application is based on a Front application using Angular and a NodeJS REST API.
+In this section we will reimplement the previous logstash configuration but with the built-in ingest feature.
 
-* In order to launch the demo app, you should run the following command
+We will first use the simulate API.
+
+* Ingest a message without any processors
 
 ```shell
-git clone https://github.com/Gillespie59/devoxx-universite-elastic
-cd devoxx-universite-elastic
-docker-compose up
+POST _ingest/pipeline/_simulate
+{
+    "pipeline" : {
+        "processors": []
+    },
+    "docs" : [{
+      "_source": {
+        "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
+      }
+
+    }]
+}
 ```
 
-* Open your browser at http://localhost to check if the application is available
+* Add the grok processor
 
-* You can also access to the RES API. Here are the differents URLs we have.
-  * GET http://localhost:8080/rest/products
-  * GET http://localhost:8080/rest/fake/url returning 404
-  * GET http://localhost:8080/rest/long/task returing 200 after 5s
-  * GET http://localhost:8080/rest/weather calling an external service
+```shell
+POST _ingest/pipeline/_simulate
+{
+    "pipeline" : {
+        "processors": [
+          {
+                "grok": {
+                    "field": "message",
+                    "patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
+                }
+            }  
+        ]
+    },
+    "docs" : [{
+      "_source": {
+        "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
+      }
+
+    }]
+}
+```
+
+* Add the remove processor
+
+```shell
+POST _ingest/pipeline/_simulate
+{
+    "pipeline" : {
+        "processors": [
+          {
+                "grok": {
+                    "field": "message",
+                    "patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
+                },
+                "remove": {
+                    "field": "message"
+                }
+            }  
+        ]
+    },
+    "docs" : [{
+      "_source": {
+        "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
+      }
+
+    }]
+}
+```
+
+* Store the pipeline in ES
+
+```shell
+PUT _ingest/pipeline/nginx
+{
+      "processors": [
+        {
+              "grok": {
+                  "field": "message",
+                  "patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
+              },
+              "remove": {
+                  "field": "message"
+              }
+          }  
+      ]
+  }
+```
+
+* Use the previous stored pipeline when indexing a new document
+
+```shell
+PUT my-index/_doc/my-id?pipeline=nginx
+{
+    "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
+}
+```
+
+```shell
+GET /my-index/_doc/my-id
+```
+
+* We will now enable the modules feature of Filebeat
+
+  * change the output of filebeat to send logs directly to elasticsearch
+  * disable the previous prospector
+  * enable module feature
+
+* Rerun filebeat
+
+```shell
+sudo filebeat -e -c config/filebeat/filebeat.yml -strict.perms=false
+```
+
+* Check the new generated dashboards created in Kibana
+
+* Run the following query to check if the new template has been created
+
+```shell
+GET  /_template/packetbeat-6.2.2
+```
+
+* Finally, we will present the possibility to generate Logstash configuration file based on a Elasticsearch pipeline
+
+```shell
+bin/ingest-convert.sh --input=file:///tmp/devoxx-universite-elastic/config/ingest/pipeline.json --output=file:///tmp/devoxx-universite-elastic/conf.cfg
+```
 
 ## Next step
 
-Look at [step1-setup-elaticsearch-kibana](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step1)
+Look at [step 1 - Packet Beat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step1)

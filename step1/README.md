@@ -1,94 +1,37 @@
-# Step 1 - Setup Elasticsearch and Kibana
+# Step 2 - Add Packetbeat
 
-* Stop the previous docker-compose
+We will now add Packetbeat to our plateform.
 
-* In order to setup Elasticsearch and Kibana in our project, you need to add these extra lines in your docker-compose file
+* Download Packetbeat
 
-```yml
-elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-platinum:6.2.3
-    environment:
-      - xpack.security.enabled=false
-    ports:
-        - 9200:9200
-        - 9300:9300
-kibana:
-    image: docker.elastic.co/kibana/kibana:6.2.3
-    depends_on:
-        - elasticsearch
-    ports:
-        - 5601:5601
+```shell
+curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.2.3-darwin-x86_64.tar.gz
+tar xzvf packetbeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-* Run the following command
+* Create the packetbeat.yml configuration file
+
+In order to start Packetbeat, you should executed the following commands :
 
 ```shell
 docker-compose up
+sudo chown root config/packetbeat/packetbeat.yml
+sudo bin/packetbeat -e -c config/packetbeat/packetbeat.yml
 ```
 
-* Have a look to the response of GET http://localhost:9200 to check if the cluster is UP
+* You can now have a look to the HTTP dashboard
 
-* Index a simple document, and check you retrieve this document in a search:
+  * Explain Overview and Web Transactions Dashbaord
+  * Show the vizualisations and searches
+  * Show the filter feature
+  * Autorefresh
+  * Date Picker
+  * Filter on a dashboard and check the result in the Discover Panel
+  * Show the template that has been created
 
-```shell
-DELETE cars
-PUT cars/_doc/1
-{
-  "model": "c3",
-  "manufacturer": "Citroen"
-}
-# Index many of them
-POST cars/_doc
-{
-  "model": "c3",
-  "manufacturer": "Citroen"
-}
-# Index many of them
-POST cars/_doc
-{
-  "model": "zoe",
-  "manufacturer": "Renault"
-}
-GET cars/_doc/1
-GET cars/_search?q=citroen
-GET cars/_search
-{
-  "query": {
-    "match": {
-      "manufacturer": "citroen"
-    }
-  }
-}
-GET cars/_doc/_search
-{
-  "size": 0,
-  "aggs" : {
-    "manufacturers_aggs" : {
-      "terms" : {
-        "field" : "manufacturer.keyword"
-      }
-    }
-  }
-}
-```
-
-* Index 1m documents with:
-
-```sh
-# Get the injector if not downloaded yet
-wget https://download.elastic.co/workshops/basic-kibana/injector/injector-6.0.jar
-# Insert 1m persons randomly generated
-java -jar injector-6.0.jar 1000000 10000
-```
-
-* Open Kibana and show the basic features:
-
-  * Search
-  * Visualizations
-  * Dashboard
-
-* Import the pre-built dashboard available in `config/kibana` dir and open it.
+* Extra:
+  * Explain that everything in Kibana are just Elastic documents : Dashboard, Visualizations,...
 
 ## Next step
 
-Look at [step2-demo-packetbeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step2)
+Look at [step 2 Metric Beat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step2)
