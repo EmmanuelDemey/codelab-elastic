@@ -30,7 +30,7 @@ packetbeat.protocols:
 - type: http
   # Configure the ports where to listen for HTTP traffic. You can disable
   # the HTTP protocol by commenting out the list of ports.
-  ports: [80, 8080]
+  ports: [80, 8080, 9200]
 
 #==================== Elasticsearch template setting ==========================
 

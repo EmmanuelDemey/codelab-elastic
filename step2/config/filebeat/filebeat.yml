@@ -21,11 +21,11 @@ filebeat.prospectors:
 - type: log
 
   # Change to true to enable this input configuration.
-  enabled: true
+  enabled: false
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/nginxlogs/*.log
+    - /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/step0/nginxlogs/*.log
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -65,12 +65,12 @@ filebeat.prospectors:
 
 #============================= Filebeat modules ===============================
 
-#filebeat.config.modules:
+filebeat.config.modules:
   # Glob pattern for configuration loading
-  #path: /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/filebeat/modules/*.yml
+  path: /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/step0/config/filebeat/modules/*.yml
 
   # Set to true to enable config reloading
-  #reload.enabled: true
+  reload.enabled: true
 
   # Period on which files under path should be checked for changes
   #reload.period: 10s
@@ -140,9 +140,9 @@ setup.kibana:
 # Configure what output to use when sending the data collected by the beat.
 
 #-------------------------- Elasticsearch output ------------------------------
-#output.elasticsearch:
+output.elasticsearch:
   # Array of hosts to connect to.
-  #hosts: ["localhost:9200"]
+  hosts: ["localhost:9200"]
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"
@@ -150,9 +150,9 @@ setup.kibana:
   #password: "changeme"
 
 #----------------------------- Logstash output --------------------------------
-output.logstash:
+#output.logstash:
   # The Logstash hosts
-  hosts: ["localhost:5044"]
+  #hosts: ["localhost:5044"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
