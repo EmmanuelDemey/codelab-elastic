@@ -6,9 +6,9 @@ We will now add alerts in our plateform. We will send alerts if we have less tha
 
 ```
 setup.kibana:
-host: "localhost:5601"
-username: "elastic"
-password: "changeme"
+  host: "localhost:5601"
+  username: "elastic"
+  password: "changeme"
 ```
 
 * In the admin part of Kibana, add a watcher. For the demo, we will only send a log message to the console
