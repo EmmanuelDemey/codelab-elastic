@@ -1,7 +1,7 @@
 - module: nginx
   access:
     enabled: true
-    var.paths: ["/Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/nginxlogs/access.log*"]
+    var.paths: ["/Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/step0/nginxlogs/access.log*"]
   error:
     enabled: true
-    var.paths: ["/Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/nginxlogs/error.log*"]
+    var.paths: ["/Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/step0/nginxlogs/error.log*"]

@@ -1,6 +1,6 @@
-# Step 7 - APM
+# Step 3 - APM
 
-And what if we monitor our NodeJS server now? We will use the APM feature of the Elastic stack
+And what if we monitor our NodeJS server now? We will use the APM features of the Elastic stack
 
 * Start docker-compose without the back
 * Start the back with nodemon in order to have hot reload
@@ -10,7 +10,10 @@ nodemon run start
 ```
 
 * Go the the home page of kibana in order to see how we can enable APM
-* Configure the APM server and start it
+* In order to configure APM, create a file `config/apm/apm-server.yml`
+* Based on this default configuration file (https://github.com/elastic/apm-server/blob/master/apm-server.yml), make the necessary changes
+  * APM should send information to Elasticsearch
+  * APM should automatically create Kibana dashboard
 * Launch the APM server
 
 ```shell
@@ -21,7 +24,6 @@ bin/apm-server -e -c config/apm/apm-server.yml
 * Install the NPM dependency
 * Add the setup code in the Express serveur
 * Show the result in Kibana
-* Add a addFilter with a console.log of the payload
 * Add nested call to the weather endpoint in order to see multiple spans in a transactions
 * Add a custom span with just a simple sleep
 

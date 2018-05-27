@@ -1,4 +1,4 @@
-# Step 2 - Add Packetbeat
+# Step 1 - Add Packetbeat
 
 We will now add Packetbeat to our plateform.
 
@@ -9,28 +9,22 @@ curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.
 tar xzvf packetbeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-* Create the packetbeat.yml configuration file
+* Create the `config/packetbeat/packetbeat.yml` configuration file based on this default configuration file : https://github.com/elastic/beats/blob/master/packetbeat/packetbeat.yml
 
-In order to start Packetbeat, you should executed the following commands :
+* Change the default configuration file ;
+
+  * in order to listen only 80, 8080 and 9200 ports
+  * packetbeat should automatically create Kibana dashboard
+  * Packetbeat should send the data directly to Elasticsearch
+
+* In order to configure APM, create a file `config/apm/apm-server.yml`
 
 ```shell
-docker-compose up
 sudo chown root config/packetbeat/packetbeat.yml
 sudo bin/packetbeat -e -c config/packetbeat/packetbeat.yml
 ```
 
-* You can now have a look to the HTTP dashboard
-
-  * Explain Overview and Web Transactions Dashbaord
-  * Show the vizualisations and searches
-  * Show the filter feature
-  * Autorefresh
-  * Date Picker
-  * Filter on a dashboard and check the result in the Discover Panel
-  * Show the template that has been created
-
-* Extra:
-  * Explain that everything in Kibana are just Elastic documents : Dashboard, Visualizations,...
+* You can now have a look to the HTTP dashboard automatically created by Packetbeat
 
 ## Next step
 

@@ -1,4 +1,4 @@
-# Step 6 - Monitor our Docke images
+# Step 2 - Monitor our Docker images
 
 We will add now the last beat of the day : Metricbeat for for Docker containers
 
@@ -9,19 +9,12 @@ curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.
 tar xzvf metricbeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-* Create the metricbeat.yml configuration file
+* Create the `config/metricbeat/metricbeat.yml` configuration file based on this default configuration file : https://github.com/elastic/beats/blob/master/metricbeat/metricbeat.yml
 
-In order to start you should executed the following commands :
+* Change the default configuration file ;
+  * We will monitor only informations about our Docker images
 
 ```shell
-docker-compose up
-sudo chown root config/metricbeat/metricbeat.yml
-sudo bin/metricbeat -e -c config/metricbeat/metricbeat.yml
-```
-
-With the following configuration
-
-```yml
 metricbeat.modules:
 - module: docker
   metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
@@ -29,7 +22,17 @@ metricbeat.modules:
   period: 10s
 ```
 
-* Open Kibana and present the differents dashboards
+* Metricbeat should automatically create Kibana dashboard
+* Metricbeat should send the data directly to Elasticsearch
+
+In order to start you should executed the following commands :
+
+```shell
+sudo chown root config/metricbeat/metricbeat.yml
+sudo bin/metricbeat -e -c config/metricbeat/metricbeat.yml
+```
+
+* Open Kibana and you should have access again to new dashboards
 
 ## Next step
 

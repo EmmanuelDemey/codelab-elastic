@@ -1,9 +1,9 @@
-# Step 8 - Add some security
+# Step 4 - Add some security
 
 We will now add some Security to our cluster
 
 * First change the ES docker used in order to use the one with XPack enabled
-* Define the environnement variable for the password used for ES (used changeme, the one used by default by Kibana)
+* Define the environnement variable for the password used for ES (use changeme, the one used by default by Kibana)
 
 ```shell
 environment:
@@ -11,7 +11,7 @@ environment:
 ```
 
 * Log in to kibana and present the new securty page
-* Index one fake document that will be used to present fields filtering
+* In the `Devtools panel`, index one fake document that will be used to present fields filtering
 
 ```shell
 POST devoxx_indices/_doc/1
