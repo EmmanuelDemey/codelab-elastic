@@ -1,6 +1,6 @@
 # Step 2 - Monitor our Docker images
 
-We will add now the last beat of the day : Metricbeat for for Docker containers
+We will add now the last beat of the day : Metricbeat for Docker containers
 
 * Download Metricbeat
 
@@ -22,10 +22,10 @@ metricbeat.modules:
   period: 10s
 ```
 
-* Metricbeat should automatically create Kibana dashboard
+* Metricbeat should automatically create Kibana dashboards
 * Metricbeat should send the data directly to Elasticsearch
 
-In order to start you should executed the following commands :
+In order to start Metricbeat, you should execut the following commands :
 
 ```shell
 sudo chown root config/metricbeat/metricbeat.yml

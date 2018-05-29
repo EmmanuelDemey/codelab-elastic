@@ -1,7 +1,5 @@
 # Step 0 - Start Elasticsearch / Kibana / Filebeat and the monitored application
 
-# Step 0 - Our Angular / NodeJS application
-
 Our application is based on a Front application using Angular and a NodeJS REST API.
 
 * In order to launch the demo app, you should run the following command
@@ -14,14 +12,14 @@ docker-compose up
 
 * Open your browser at http://localhost to check if the application is available
 
-* You can also access to the RES API. Here are the differents URLs we have.
+* You can also access to the REST API. Here are the differents URLs we have.
 
   * GET http://localhost:8080/rest/products
   * GET http://localhost:8080/rest/fake/url returning 404
-  * GET http://localhost:8080/rest/long/task returing 200 after 5s
+  * GET http://localhost:8080/rest/long/task returning 200 after 5s
   * GET http://localhost:8080/rest/weather calling an external service
 
-* In the previous docker-compose file, we also defined everything need to start our logs management system.
+* In the previous docker-compose file, we also defined everything needed to start our logs management system.
   * Have a look to the response of GET http://localhost:9200 to check if the Elasticsearch cluster is UP
   * Go to http://localhost:5601 to check if the Kibana UI is available.
 

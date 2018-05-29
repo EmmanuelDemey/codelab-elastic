@@ -2,15 +2,15 @@
 
 We will now add some Security to our cluster
 
-* First change the ES docker used in order to use the one with XPack enabled
-* Define the environnement variable for the password used for ES (use changeme, the one used by default by Kibana)
+* First change the ES Docker image in order to use the one with XPack enabled
+* Define the environnement variable for the password used for Elasticsearch (use changeme, the one used by default by Kibana)
 
 ```shell
 environment:
       - ELASTIC_PASSWORD=changeme
 ```
 
-* Log in to kibana and present the new securty page
+* Log in to kibana and have a look to the new securty page
 * In the `Devtools panel`, index one fake document that will be used to present fields filtering
 
 ```shell
@@ -27,7 +27,7 @@ POST devoxx_indices/_doc/1
 
 * Log in with this account and check if we only have access to the dashboard page... But we have no data :(
 
-* Create a role devoxx-reader with read right on the devoxx-reader indice, and remove the secret field of each document
+* Create a role devoxx-reader with read right on the devoxx_indices indice, and remove the secret field of each document
 
 * Check if the role has been created
 
@@ -79,7 +79,7 @@ POST /_xpack/security/role/devoxx-reader
 
 * Check thanks to the Kibana UI if this modification is enabled
 
-* Check the Kibana UI with Manu
+* Check the Kibana UI with the `Manu` user
 
 ## Next step
 

@@ -1,8 +1,8 @@
 # Step 5 - Alerting
 
-We will now add alerts in our plateform. We will send alerts if we have less than 10 request in the last 5 mn .
+We will now add alerts in our plateform. We will send alerts if we have less than 10 requests in the last 5 mn .
 
-* Add username/password to filebeat (kibana option)
+* Add username/password to the filebeat configuration file
 
 ```
 setup.kibana:
@@ -18,7 +18,7 @@ setup.kibana:
     * This watcher should use index pattern `filebeat-*`.
     * If we have less than 10 requests in the last 5mn, we should logs this message : Votre site n'a pas beaucoup de visiteurs (XXX), with XXX the number of visits
 
-* Show the History page of a watcher.
+* Have a look the History page of a watcher.
 
 * From the Devtools, execute the following request
 

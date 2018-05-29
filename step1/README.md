@@ -13,11 +13,11 @@ tar xzvf packetbeat-6.2.3-darwin-x86_64.tar.gz
 
 * Change the default configuration file ;
 
-  * in order to listen only 80, 8080 and 9200 ports
-  * packetbeat should automatically create Kibana dashboard
+  * in order to listen only the 80, 8080 and 9200 ports
+  * packetbeat should automatically create Kibana dashboards
   * Packetbeat should send the data directly to Elasticsearch
 
-* In order to configure APM, create a file `config/apm/apm-server.yml`
+* You can noz execute Packetbeat and start indexing network data.
 
 ```shell
 sudo chown root config/packetbeat/packetbeat.yml
