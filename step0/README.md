@@ -1,6 +1,6 @@
 author: Emmanuel DEMEY et David Pilato
 summary: Un concentrateur de logs avec la suite Elastic
-id: elastic
+id: docs
 
 # Codelab Elastic
 
