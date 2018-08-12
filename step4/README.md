@@ -1,17 +1,17 @@
-# Step 4 - Add some security
+## Add some security
 
 We will now add some Security to our cluster
 
-* First change the ES Docker image in order to use the one with XPack enabled
-* Define the environnement variable for the password used for Elasticsearch (use changeme, the one used by default by Kibana)
+- First change the ES Docker image in order to use the one with XPack enabled
+- Define the environnement variable for the password used for Elasticsearch (use changeme, the one used by default by Kibana)
 
 ```shell
 environment:
       - ELASTIC_PASSWORD=changeme
 ```
 
-* Log in to kibana and have a look to the new securty page
-* In the `Devtools panel`, index one fake document that will be used to present fields filtering
+- Log in to kibana and have a look to the new securty page
+- In the `Devtools panel`, index one fake document that will be used to present fields filtering
 
 ```shell
 POST devoxx_indices/_doc/1
@@ -21,33 +21,33 @@ POST devoxx_indices/_doc/1
 }
 ```
 
-* Create a simple dashboard with a saved search
+- Create a simple dashboard with a saved search
 
-* Create a user manu with the kibana dashboard only role
+- Create a user manu with the kibana dashboard only role
 
-* Log in with this account and check if we only have access to the dashboard page... But we have no data :(
+- Log in with this account and check if we only have access to the dashboard page... But we have no data :(
 
-* Create a role devoxx-reader with read right on the devoxx_indices indice, and remove the secret field of each document
+- Create a role devoxx-reader with read right on the devoxx_indices indice, and remove the secret field of each document
 
-* Check if the role has been created
+- Check if the role has been created
 
 ```shell
 GET /_xpack/security/role
 ```
 
-* Assign this role to the user manu
+- Assign this role to the user manu
 
-* Log in again and normally we should have access to the right data
+- Log in again and normally we should have access to the right data
 
-* Add a lastName field to the document. Manu should not be able to see this field
+- Add a lastName field to the document. Manu should not be able to see this field
 
-* Get the role thanks to the REST API
+- Get the role thanks to the REST API
 
 '''shell
 GET /\_xpack/security/role
 '''
 
-* Add the lastName field to the configuration
+- Add the lastName field to the configuration
 
 ```shell
 POST /_xpack/security/role/devoxx-reader
@@ -77,10 +77,10 @@ POST /_xpack/security/role/devoxx-reader
   }
 ```
 
-* Check thanks to the Kibana UI if this modification is enabled
+- Check thanks to the Kibana UI if this modification is enabled
 
-* Check the Kibana UI with the `Manu` user
+- Check the Kibana UI with the `Manu` user
 
-## Next step
+### Next step
 
 Look at [step5 alerting](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step5)
