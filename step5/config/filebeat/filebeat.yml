@@ -25,7 +25,7 @@ filebeat.prospectors:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/nginxlogs/*.log
+    - /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/step0/nginxlogs/*.log
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -67,7 +67,7 @@ filebeat.prospectors:
 
 filebeat.config.modules:
   # Glob pattern for configuration loading
-  path: /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/config/filebeat/modules/*.yml
+  path: /Users/emmanueldemey/Documents/workspaces/oss/devoxx-universite-elastic/step0/config/filebeat/modules/*.yml
 
   # Set to true to enable config reloading
   reload.enabled: true

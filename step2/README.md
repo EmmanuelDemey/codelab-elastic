@@ -1,37 +1,39 @@
-# Step 2 - Add Packetbeat
+## Monitor our Docker images
 
-We will now add Packetbeat to our plateform.
+We will add now the last beat of the day : Metricbeat for Docker containers
 
-* Download Packetbeat
-
-```shell
-curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.2.3-darwin-x86_64.tar.gz
-tar xzvf packetbeat-6.2.3-darwin-x86_64.tar.gz
-```
-
-* Create the packetbeat.yml configuration file
-
-In order to start Packetbeat, you should executed the following commands :
+- Download Metricbeat
 
 ```shell
-docker-compose up
-sudo chown root config/packetbeat/packetbeat.yml
-sudo bin/packetbeat -e -c config/packetbeat/packetbeat.yml
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.2.3-darwin-x86_64.tar.gz
+tar xzvf metricbeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-* You can now have a look to the HTTP dashboard
+- Create the `config/metricbeat/metricbeat.yml` configuration file based on this default configuration file : https://github.com/elastic/beats/blob/master/metricbeat/metricbeat.yml
 
-  * Explain Overview and Web Transactions Dashbaord
-  * Show the vizualisations and searches
-  * Show the filter feature
-  * Autorefresh
-  * Date Picker
-  * Filter on a dashboard and check the result in the Discover Panel
-  * Show the template that has been created
+- Change the default configuration file ;
+  - We will monitor only informations about our Docker images
 
-* Extra:
-  * Explain that everything in Kibana are just Elastic documents : Dashboard, Visualizations,...
+```shell
+metricbeat.modules:
+- module: docker
+  metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 10s
+```
 
-## Next step
+- Metricbeat should automatically create Kibana dashboards
+- Metricbeat should send the data directly to Elasticsearch
 
-Look at [step3-demo-filebeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step3)
+In order to start Metricbeat, you should execut the following commands :
+
+```shell
+sudo chown root config/metricbeat/metricbeat.yml
+sudo bin/metricbeat -e -c config/metricbeat/metricbeat.yml
+```
+
+- Open Kibana and you should have access again to new dashboards
+
+### Next step
+
+Look at [step3 APM](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step3)

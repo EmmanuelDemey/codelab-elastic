@@ -1,135 +1,39 @@
-# Step 5 - Ingest our logs with Elasticsearch
+## Alerting
 
-In this section we will reimplement the previous logstash configuration but with the built-in ingest feature.
+We will now add alerts in our plateform. We will send alerts if we have less than 10 requests in the last 5 mn .
 
-We will first use the simulate API.
+- Add username/password to the filebeat configuration file
 
-* Ingest a message without any processors
+```
+setup.kibana:
+  host: "localhost:5601"
+  username: "elastic"
+  password: "changeme"
+```
 
-```shell
-POST _ingest/pipeline/_simulate
+- In the admin part of Kibana, add a watcher. For the demo, we will only send a log message to the console
+
+  - We won't create the Watcher thanks to an HTTP request. We will use the dedicated Kibana UI (threshold watch)
+    - Name this watcher `nightclazz`
+    - This watcher should use index pattern `filebeat-*`.
+    - If we have less than 10 requests in the last 5mn, we should logs this message : Votre site n'a pas beaucoup de visiteurs (XXX), with XXX the number of visits
+
+- Have a look the History page of a watcher.
+
+- From the Devtools, execute the following request
+
+```
+GET _xpack/watcher/watch/<ID of the watcher>
+
+GET .watcher-history*/_search?pretty
 {
-    "pipeline" : {
-        "processors": []
-    },
-    "docs" : [{
-      "_source": {
-        "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
-      }
+  "query": {
+            "match": {
+              "metadata.name": "nightclazz"
+            }
+          }
 
-    }]
 }
 ```
 
-* Add the grok processor
-
-```shell
-POST _ingest/pipeline/_simulate
-{
-    "pipeline" : {
-        "processors": [
-          {
-                "grok": {
-                    "field": "message",
-                    "patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
-                }
-            }  
-        ]
-    },
-    "docs" : [{
-      "_source": {
-        "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
-      }
-
-    }]
-}
-```
-
-* Add the remove processor
-
-```shell
-POST _ingest/pipeline/_simulate
-{
-    "pipeline" : {
-        "processors": [
-          {
-                "grok": {
-                    "field": "message",
-                    "patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
-                },
-                "remove": {
-                    "field": "message"
-                }
-            }  
-        ]
-    },
-    "docs" : [{
-      "_source": {
-        "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
-      }
-
-    }]
-}
-```
-
-* Store the pipeline in ES
-
-```shell
-PUT _ingest/pipeline/nginx
-{
-      "processors": [
-        {
-              "grok": {
-                  "field": "message",
-                  "patterns": ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \\[%{HTTPDATE:[nginx][access][time]}\\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""]
-              },
-              "remove": {
-                  "field": "message"
-              }
-          }  
-      ]
-  }
-```
-
-* Use the previous stored pipeline when indexing a new document
-
-```shell
-PUT my-index/_doc/my-id?pipeline=nginx
-{
-    "message": "172.18.0.1 - - [25/Mar/2018:17:07:43 +0000] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36\" \"-\"\r\n"
-}
-```
-
-```shell
-GET /my-index/_doc/my-id
-```
-
-* We will now enable the modules feature of Filebeat
-
-  * change the output of filebeat to send logs directly to elasticsearch
-  * disable the previous prospector
-  * enable module feature
-
-* Rerun filebeat
-
-```shell
-sudo filebeat -e -c config/filebeat/filebeat.yml -strict.perms=false
-```
-
-* Check the new generated dashboards created in Kibana
-
-* Run the following query to check if the new template has been created
-
-```shell
-GET  /_template/packetbeat-6.2.2
-```
-
-* Finally, we will present the possibility to generate Logstash configuration file based on a Elasticsearch pipeline
-
-```shell
-bin/ingest-convert.sh --input=file:///tmp/devoxx-universite-elastic/config/ingest/pipeline.json --output=file:///tmp/devoxx-universite-elastic/conf.cfg
-```
-
-## Next step
-
-Look at [step6-demo-metricbeat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step6)
+- Create a quick Counter in order to show the number of alerts.

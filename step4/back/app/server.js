@@ -1,3 +1,7 @@
+const apm = require("elastic-apm-node").start({
+  serviceName: "nightclazz"
+});
+
 const _ = require("underscore");
 const express = require("express");
 const http = require("http");
@@ -52,12 +56,19 @@ app.get(context + "/basket", function(req, res) {
 });
 
 app.get(context + "/weather", function(req, res) {
+  const span = apm.startSpan("getting info");
+  sleep(1);
+  if (span) span.end();
+
   weather.find({ search: "San Francisco, CA", degreeType: "F" }, function(
     err,
     result
   ) {
     if (err) console.log(err);
-    res.send(result);
+    weather.find({ search: "Paris", degreeType: "F" }, function(err, result) {
+      if (err) console.log(err);
+      res.send(result);
+    });
   });
 });
 
@@ -66,6 +77,11 @@ app.get(context + "/long/task", function(req, res) {
     res.send(200, {});
   }, 5000);
 });
+
+function sleep(seconds) {
+  var waitUntil = new Date().getTime() + seconds * 1000;
+  while (new Date().getTime() < waitUntil) true;
+}
 
 server.listen(port);
 console.log("Express server listening on port", server.address().port);
