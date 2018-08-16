@@ -1,32 +1,43 @@
-## APM
+## Metricbeat
 
-And what if we monitor our NodeJS server now? We will use the APM features of the Elastic stack
+Positive
+: Voici la documentation utile pour cette étape
+  * [Documentation de MetricBeat](https://www.elastic.co/guide/en/beats/metricbeat/current/index.html) 
 
-- Start docker-compose without the back
-- Start the back with nodemon in order to have the hot reload feature.
+C'est le tour du dernier Beat à mettre en place : **MetricBeat**
 
-```shell
-nodemon run start
-```
-
-- Go the the home page of kibana in order to see how we can enable APM
-- In order to configure APM, create a file `config/apm/apm-server.yml`
-- Based on this default configuration file (https://github.com/elastic/apm-server/blob/master/apm-server.yml), make the necessary changes
-  - APM should send information to Elasticsearch
-  - APM should automatically create Kibana dashboards
-- Launch the APM server
+- Téléchargez Metricbeat
 
 ```shell
-bin/apm-server -e -c config/apm/apm-server.yml
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.2.3-darwin-x86_64.tar.gz
+tar xzvf metricbeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-- Open Kibana and check the available dashboards
-- Install the NPM dependency into the NodeJS API REST server.
-- Add the setup code in the Express server
-- Show the result in Kibana
-- Add nested call to the weather endpoint in order to see multiple spans in a transaction
-- Add a custom span with just a simple sleep
+- Créez un fichier de configuration `config/metricbeat/metricbeat.yml` basé sur ce template: [https://github.com/elastic/beats/blob/master/metricbeat/metricbeat.yml](https://github.com/elastic/beats/blob/master/metricbeat/metricbeat.yml)
 
-### Next step
+- Modifiez le fichier de configuration, afin de respecter les règles ci-dessous:
 
-Look at [step4 Security](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step4)
+  - vous souhaitez monitorer les metriques des vos containers Docker
+  - MetricBeat doit genérer les dashboards Kibana nécessaires
+  - MetricBeat doit envoyer les données à votre cluster Elasticsearch
+
+```shell
+metricbeat.modules:
+- module: docker
+  metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 10s
+```
+
+- Vous pouvez à présent lancer MetricBeat
+
+```shell
+sudo chown root config/metricbeat/metricbeat.yml
+sudo bin/metricbeat -e -c config/metricbeat/metricbeat.yml
+```
+
+- Vos container sont à présent monitorés, et vous accédez aux données indéxées depuis Kibana
+
+### Étape suivante
+
+[APM](https://github.com/Gillespie59/codelab-elastic/tree/nightclazz/step4)

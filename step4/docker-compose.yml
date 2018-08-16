@@ -9,7 +9,7 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-platinum:6.2.3
     environment:
-      - ELASTIC_PASSWORD=changeme
+      - xpack.security.enabled=false
     ports:
       - 9200:9200
       - 9300:9300

@@ -1,39 +1,35 @@
-## Monitor our Docker images
+## Packetbeat
 
-We will add now the last beat of the day : Metricbeat for Docker containers
+Positive
+: Voici la documentation utile pour cette étape
+  * [Documentation de PacketBeat](https://www.elastic.co/guide/en/beats/packetbeat/current/index.html) 
 
-- Download Metricbeat
+Il est à présent temps d'ajouter **PacketBeat** à notre plateforme.
 
-```shell
-curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.2.3-darwin-x86_64.tar.gz
-tar xzvf metricbeat-6.2.3-darwin-x86_64.tar.gz
-```
-
-- Create the `config/metricbeat/metricbeat.yml` configuration file based on this default configuration file : https://github.com/elastic/beats/blob/master/metricbeat/metricbeat.yml
-
-- Change the default configuration file ;
-  - We will monitor only informations about our Docker images
+- Téléchargez Packetbeat
 
 ```shell
-metricbeat.modules:
-- module: docker
-  metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
-  hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
+curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.2.3-darwin-x86_64.tar.gz
+tar xzvf packetbeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-- Metricbeat should automatically create Kibana dashboards
-- Metricbeat should send the data directly to Elasticsearch
+- Créez un fichier de configuration `config/packetbeat/packetbeat.yml` basé sur ce template: [https://github.com/elastic/beats/blob/master/packetbeat/packetbeat.yml](https://github.com/elastic/beats/blob/master/packetbeat/packetbeat.yml)
 
-In order to start Metricbeat, you should execut the following commands :
+- Modifiez le fichier de configuration, afin de respecter les règles ci-dessous:
+
+  - vous souhaitez monitorer les requêtes sur les ports `80`, `8080` et `9200`
+  - PacketBeat doit genérer les dashboards Kibana nécessaires
+  - Packetbeat doit envoyer les données à votre cluster Elasticsearch
+
+- Vous pouvez à présent lancer PacketBeat et indexer vos nouvelles données.
 
 ```shell
-sudo chown root config/metricbeat/metricbeat.yml
-sudo bin/metricbeat -e -c config/metricbeat/metricbeat.yml
+sudo chown root config/packetbeat/packetbeat.yml
+sudo bin/packetbeat -e -c config/packetbeat/packetbeat.yml
 ```
 
-- Open Kibana and you should have access again to new dashboards
+- Depuis Kibana, vous devriez avoir accès à de nouveaux dashboards, notamment celui permettant de monitorer les requêtes HTTP.
 
-### Next step
+### Étape suivante
 
-Look at [step3 APM](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step3)
+[MetricBeat](https://github.com/Gillespie59/codelab-elastic/tree/nightclazz/step3)

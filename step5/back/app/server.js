@@ -1,11 +1,5 @@
-// Add this to the VERY top of the first file loaded in your app
 const apm = require("elastic-apm-node").start({
-  serviceName: "devoxx"
-});
-
-apm.addFilter(payload => {
-  console.log(payload);
-  return payload;
+  serviceName: "nightclazz"
 });
 
 const _ = require("underscore");
@@ -70,10 +64,8 @@ app.get(context + "/weather", function(req, res) {
     err,
     result
   ) {
-    weather.find({ search: "San Francisco, CA", degreeType: "F" }, function(
-      err,
-      result
-    ) {
+    if (err) console.log(err);
+    weather.find({ search: "Paris", degreeType: "F" }, function(err, result) {
       if (err) console.log(err);
       res.send(result);
     });
@@ -86,10 +78,10 @@ app.get(context + "/long/task", function(req, res) {
   }, 5000);
 });
 
-server.listen(port);
-console.log("Express server listening on port", server.address().port);
-
 function sleep(seconds) {
   var waitUntil = new Date().getTime() + seconds * 1000;
   while (new Date().getTime() < waitUntil) true;
 }
+
+server.listen(port);
+console.log("Express server listening on port", server.address().port);

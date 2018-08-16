@@ -1,31 +1,30 @@
-## Add Packetbeat
+## FileBeat
 
-We will now add Packetbeat to our plateform.
+Positive
+: Voici la documentation utile pour cette étape
+  * [Documentation de FileBeat](https://www.elastic.co/guide/en/beats/filebeat/current/index.html) 
 
-- Download Packetbeat
+Nous allons à présent activer **Filebeat** afin d'indexer et visualiser les logs générés par **NGINX**.
 
-```shell
-curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.2.3-darwin-x86_64.tar.gz
-tar xzvf packetbeat-6.2.3-darwin-x86_64.tar.gz
-```
-
-- Create the `config/packetbeat/packetbeat.yml` configuration file based on this default configuration file : https://github.com/elastic/beats/blob/master/packetbeat/packetbeat.yml
-
-- Change the default configuration file ;
-
-  - in order to listen only the 80, 8080 and 9200 ports
-  - packetbeat should automatically create Kibana dashboards
-  - Packetbeat should send the data directly to Elasticsearch
-
-- You can noz execute Packetbeat and start indexing network data.
+- Télécharger Filebeat
 
 ```shell
-sudo chown root config/packetbeat/packetbeat.yml
-sudo bin/packetbeat -e -c config/packetbeat/packetbeat.yml
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.2.3-darwin-x86_64.tar.gz
+tar xzvf filebeat-6.2.3-darwin-x86_64.tar.gz
 ```
 
-- You can now have a look to the HTTP dashboard automatically created by Packetbeat
+- Créer un fichier de configuration `config/packetbeat/filebeat.yml` basé sur ce template: [https://github.com/elastic/beats/blob/master/filebeat/filebeat.yml](https://github.com/elastic/beats/blob/master/filebeat/filebeat.yml)
 
-### Next step
+- Afin de lancer Filebeat, vous devez exécuter la commande suivante :
 
-Look at [step 2 Metric Beat](https://github.com/Gillespie59/devoxx-universite-elastic/tree/master/step2)
+```shell
+sudo bin/filebeat -e -c config/filebeat/filebeat.yml
+```
+
+- Vous devez à présent avoir accés à de nouveaux dashboards Kibana. Afin d'indexer de nouvelles données, vous pouvez simuler des visiteurs sur votre site :
+  - Soit en rafraichissant la page depuis votre navigateur
+  - Soit en utilisant un outil comme `ab` : `ab -n 100000 -c 1 http://127.0.0.1:80/index.html`
+
+### Étape suivante
+
+[PacketBeat](https://github.com/Gillespie59/codelab-elastic/tree/nightclazz/step2)
