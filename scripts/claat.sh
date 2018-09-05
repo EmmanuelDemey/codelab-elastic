@@ -1,5 +1,3 @@
-#!/bin/sh
-
 function setup() {
     rm -Rf ./.tmp
     mkdir ./.tmp
