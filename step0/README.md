@@ -4,6 +4,9 @@ id: elastic-codelab
 
 # Codelab Elastic
 
+Prérequis: 
+- Docker et Docker Compose
+
 ## Elasticsearch et Kibana
 
 Positive
@@ -34,6 +37,8 @@ docker-compose up
 - Dans le fichier `docker-compose`, nous avons également défini le nécessaire pour notre concentrateur de logs.
   - Jetez un coup d'oeil à la réponse HTTP retournée par la requête de type `GET` sur le endpoint [http://localhost:9200](http://localhost:9200) pour vérifier que Elasticsearch est bien démarré
   - Allez sur [http://localhost:5601](http://localhost:5601) pour accéder à l'interface graphique de Kibana
+
+Les logs qui seront par la suite indexés dans Elasticsearch se trouveront dans le répertoire `nginxlogs`.
 
 ### Étape suivante
 

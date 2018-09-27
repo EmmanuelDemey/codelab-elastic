@@ -15,10 +15,16 @@ tar xzvf filebeat-6.2.3-darwin-x86_64.tar.gz
 
 - Créer un fichier de configuration `config/packetbeat/filebeat.yml` basé sur ce template: [https://github.com/elastic/beats/blob/master/filebeat/filebeat.yml](https://github.com/elastic/beats/blob/master/filebeat/filebeat.yml)
 
+- Modifiez le fichier de configuration, afin de respecter les règles ci-dessous:
+
+  - vous devez indexer les logs de type Nginx générée par notre application
+  - Filebeat doit genérer les dashboards Kibana nécessaires
+  - Filebeat doit envoyer les données à votre cluster Elasticsearch
+
 - Afin de lancer Filebeat, vous devez exécuter la commande suivante :
 
 ```shell
-sudo bin/filebeat -e -c config/filebeat/filebeat.yml
+sudo bin/filebeat -e -c config/filebeat/filebeat.yml -strict.perms=false
 ```
 
 - Vous devez à présent avoir accés à de nouveaux dashboards Kibana. Afin d'indexer de nouvelles données, vous pouvez simuler des visiteurs sur votre site :

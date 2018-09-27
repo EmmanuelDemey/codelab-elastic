@@ -6,15 +6,6 @@ Positive
 
 Pour finir, nous allons mettre en place la solution d'alerting. Nous allons émettre des alertes, si nous recevons moins de 10 requêtes dans les dernières 5 minutes.
 
-- Ajoutez username/password dans le fichier de configuration de **Filebeat**
-
-```
-setup.kibana:
-  host: "localhost:5601"
-  username: "elastic"
-  password: "changeme"
-```
-
 - Dans la partie d'administration de Kibana, ajoutez un _watcher_. Pour ce codelab, nous allons émettre l'alerte dans la console d'Elasticsearch
 
   - Nous n'allons pas créer un watcher via l'API REST. Nous allons utiliser l'interface dédiée (threshold watch)

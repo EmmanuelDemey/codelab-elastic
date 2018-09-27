@@ -82,6 +82,8 @@ POST /_xpack/security/role/codelab-reader
 
 - L'utilisateur `manu` devrait avoir accès à ce champ à présent.
 
+- Afin de faire fonctionner les modules utilisés précédemment, ajoutez username/password dans le fichier de configuration de **Filebeat**, **MetricBeat**, **PacketBeat** et **APM**. 
+
 ### Étape suivante
 
 [Alerting](https://github.com/Gillespie59/codelab-elastic/tree/nightclazz/step6)
