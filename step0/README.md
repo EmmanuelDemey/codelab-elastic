@@ -5,7 +5,7 @@ id: elastic-codelab
 # Codelab Elastic
 
 Prérequis: 
-- Docker et Docker Compose
+- Vagrant et Virtual Box
 
 ## Elasticsearch et Kibana
 
