@@ -1,0 +1,17 @@
+{
+  "environment": "web",
+  "source": "./.tmp/index.md",
+  "format": "html",
+  "prefix": "../../",
+  "mainga": "UA-49880327-14",
+  "updated": "2018-10-05T18:26:55+02:00",
+  "id": "",
+  "duration": 0,
+  "title": "",
+  "summary": "",
+  "theme": "",
+  "status": null,
+  "category": null,
+  "tags": [],
+  "url": ""
+}
