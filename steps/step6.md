@@ -2,17 +2,20 @@
 
 Positive
 : Voici la documentation utile pour cette étape
-  * [Documentation de APM](https://www.elastic.co/guide/en/apm/get-started/current/index.html) 
+
+- [Documentation de APM](https://www.elastic.co/guide/en/apm/get-started/current/index.html)
 
 Nous allons à présent activer **APM** afin de monitorer la performace d'une API REST NodeJS
 
-Afin de configurer APM, vous devez modifier le fichier disponible dans l'image fournie ; `/etc/apm/apm-server.yml`
+Afin de configurer APM, vous devez modifier le fichier disponible dans l'image fournie : `/etc/apm/apm-server.yml`
 
-- Faites les modifications nécessaires pour activer `APM` dans notre solution:
+- Faites les modifications nécessaires pour activer `APM`:
+
   - Activer la sortie Elasticsearch
   - Configurer la connexion avec Kibana
 
 - Démarrer APM :
+
 ```
 cd /elastic-stack
 ansible-playbook 4_configure-apm.yml
@@ -29,16 +32,17 @@ ansible-playbook 4_configure-apm.yml
 require("elastic-apm-node").start({});
 ```
 
-  - Redemarrer l'API NodeJS et vérifier que vous récupérer des données
-  - Installer le module NPM `weather-js`
-  - Lors d'un `GET` sur /, appeler le module weather afin de retourner à l'utilisateur la météo de Nantes. 
+- Redemarrer l'API NodeJS et vérifier que vous récupérer des données
+- Installer le module NPM `weather-js`
+- Lors d'un `GET` sur /, appeler le module weather afin de retourner à l'utilisateur la météo de Nantes.
 
 ```javascript
 app.get("/", (req, res) => {
-  require("weather-js").find({ search: "Nantes, FR" }, (err,result) => {
+  require("weather-js").find({ search: "Nantes, FR" }, (err, result) => {
     if (err) console.log(err);
     res.send(result);
   });
 });
 ```
-  - Via curl, faites de nouveaux des requêtes sur ce endpoint. Vous allez à présent récupérer un nouveau `span` dans une transaction utilisateur, représentant le temps d'exécution de la requête. 
+
+- Via curl, faites de nouveaux des requêtes sur ce endpoint. Vous allez à présent récupérer un nouveau `span` dans une transaction utilisateur, représentant le temps d'exécution de la requête.
