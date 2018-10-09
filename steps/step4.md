@@ -31,7 +31,7 @@ cd /elastic-stack
 ansible-playbook 4_configure-packetbeat.yml
 ```
 
-- Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement crées pour pour les requêtes HTTP.
+- Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement créés pour pour les requêtes HTTP.
 
 ### Étape suivante
 
