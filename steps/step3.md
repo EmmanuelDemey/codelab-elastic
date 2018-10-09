@@ -24,7 +24,7 @@ cd /elastic-stack
 ansible-playbook 4_configure-filebeat.yml
 ```
 
-- Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement crées pour Nginx.
+- Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement créés pour Nginx.
 
 ### Étape suivante
 
