@@ -5,7 +5,7 @@ Positive
 
 - [Documentation de APM](https://www.elastic.co/guide/en/apm/get-started/current/index.html)
 
-Nous allons à présent activer **APM** afin de monitorer la performace d'une API REST NodeJS
+Nous allons à présent activer **APM** afin de monitorer la performance d'une API REST NodeJS
 
 Afin de configurer APM, vous devez modifier le fichier disponible dans l'image fournie : `/etc/apm/apm-server.yml`
 
@@ -16,13 +16,13 @@ Afin de configurer APM, vous devez modifier le fichier disponible dans l'image f
 
 - Démarrer APM :
 
-```
+```shell
 cd /elastic-stack
 ansible-playbook 4_configure-apm.yml
 ```
 
 - Une application NodeJS est disponible dans `/etc/nodejs-api`
-  - Installer les dépendance : `sudo npm i`
+  - Installer les dépendances : `sudo npm i`
   - Lancer l'application en exécutant `npm start &`
   - Executer un curl pour vérifier que l'API est disponible : `curl http://localhost:3000`
   - Installer le module NPM pour pour ajouter le client `APM` dans le projet NodeJS (`sudo npm i elastic-apm-node`)
@@ -34,7 +34,7 @@ require("elastic-apm-node").start({});
 
 - Redemarrer l'API NodeJS et vérifier que vous récupérer des données
 - Installer le module NPM `weather-js`
-- Lors d'un `GET` sur /, appeler le module weather afin de retourner à l'utilisateur la météo de Nantes.
+- Lors d'un `GET` sur `/`, appeler le module `weather` afin de retourner à l'utilisateur la météo de Nantes.
 
 ```javascript
 app.get("/", (req, res) => {
@@ -45,4 +45,4 @@ app.get("/", (req, res) => {
 });
 ```
 
-- Via curl, faites de nouveaux des requêtes sur ce endpoint. Vous allez à présent récupérer un nouveau `span` dans une transaction utilisateur, représentant le temps d'exécution de la requête.
+- Via curl, faites de nouvelles requêtes sur ce endpoint. Vous allez à présent récupérer un nouveau `span` dans une transaction utilisateur, représentant le temps d'exécution de la requête vers le service `weather`.
