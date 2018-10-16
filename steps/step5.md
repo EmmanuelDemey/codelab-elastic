@@ -28,7 +28,3 @@ ansible-playbook 4_configure-metricbeat.yml
 ```
 
 - Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement créés.
-
-### Étape suivante
-
-[APM](https://codelab-elastic.firebaseapp.com/#5)

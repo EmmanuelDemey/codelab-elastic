@@ -105,9 +105,3 @@ POST /movies/_search
 DELETE /movies
 GET /movies/_doc/1
 ```
-
-### Étape suivante
-
-Pour l'instant, nous avons intéragi avec Elasticsearch en utilisant un client REST. Dans la prochaine étape, nous aborderons l'interface Kibana permettant de créer notamment des visualisations et des dashboards sur vos données indexés dans votre cluster Elasticsearch.
-
-[Kibana](https://codelab-elastic.firebaseapp.com/#1)

@@ -32,7 +32,3 @@ ansible-playbook 4_configure-packetbeat.yml
 ```
 
 - Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement créés pour pour les requêtes HTTP.
-
-### Étape suivante
-
-[MetricBeat](https://codelab-elastic.firebaseapp.com/#4)

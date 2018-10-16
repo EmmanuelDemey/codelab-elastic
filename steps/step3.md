@@ -25,7 +25,3 @@ ansible-playbook 4_configure-filebeat.yml
 ```
 
 - Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement créés pour Nginx.
-
-### Étape suivante
-
-[PacketBeat](https://codelab-elastic.firebaseapp.com/#3)
