@@ -62,7 +62,7 @@ GET /person/_search
 }
 ```
 
-- Nous allons à présent utiliser Kibana pour créer nos propores visualisations et dashboards
+- Nous allons à présent utiliser Kibana pour créer nos propres visualisations et dashboards
 
   - Ajouter l'index `person` dans la partie d'Administration de Kibana
   - Visualiser les données via la page `Discover`
@@ -77,4 +77,4 @@ GET /person/_search
 
 ### Étape suivante
 
-[Filebeat](https://github.com/Gillespie59/codelab-elastic/tree/devfest-nantes/steps/step2.md)
+[Filebeat](https://codelab-elastic.firebaseapp.com/#2)

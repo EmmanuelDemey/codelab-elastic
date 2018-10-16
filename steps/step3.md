@@ -28,4 +28,4 @@ ansible-playbook 4_configure-filebeat.yml
 
 ### Étape suivante
 
-[PacketBeat](https://github.com/Gillespie59/codelab-elastic/tree/devfest-nantes/steps/step3.md)
+[PacketBeat](https://codelab-elastic.firebaseapp.com/#3)

@@ -110,4 +110,4 @@ GET /movies/_doc/1
 
 Pour l'instant, nous avons intéragi avec Elasticsearch en utilisant un client REST. Dans la prochaine étape, nous aborderons l'interface Kibana permettant de créer notamment des visualisations et des dashboards sur vos données indexés dans votre cluster Elasticsearch.
 
-[Kibana](https://github.com/Gillespie59/codelab-elastic/tree/devfest-nantes/steps/step1.md)
+[Kibana](https://codelab-elastic.firebaseapp.com/#1)

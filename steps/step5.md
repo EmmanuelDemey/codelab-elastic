@@ -31,4 +31,4 @@ ansible-playbook 4_configure-metricbeat.yml
 
 ### Étape suivante
 
-[APM](https://github.com/Gillespie59/codelab-elastic/tree/devfest-nantes/steps/step5.md)
+[APM](https://codelab-elastic.firebaseapp.com/#5)

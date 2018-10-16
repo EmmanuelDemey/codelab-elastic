@@ -35,4 +35,4 @@ ansible-playbook 4_configure-packetbeat.yml
 
 ### Étape suivante
 
-[MetricBeat](https://github.com/Gillespie59/codelab-elastic/tree/devfest-nantes/steps/step4.md)
+[MetricBeat](https://codelab-elastic.firebaseapp.com/#4)
