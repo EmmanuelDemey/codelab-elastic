@@ -16,6 +16,8 @@ Positive
 - [Documentation d'Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 - [Université à Devoxx France](https://www.youtube.com/watch?v=0J5Xt5CCQhQ)
 
+### Installation
+
 Nous vous fournissons un environnement complet afin de tester la suite Elastic. Veuillez suivre les étapes suivantes afin de la démarrer:
 
 ```shell
@@ -28,12 +30,14 @@ vagrant ssh
 
 Si vous n'avez ni Vagrant ni Ansible, vous pouvez utiliser l'image OVA fournie via clé USB.
 
-- Chargez le fichier OVA dans VirtualBox, et assurez vous d'avoir 3GB de RAM disponible. (File -> Import Appliance... -> Select the file and start it0
+- Chargez le fichier OVA dans VirtualBox, et assurez vous d'avoir 3GB de RAM disponible. (File -> Import Appliance... -> Select the file and start it)
 - Connectez vous à l'instance en utilisant le login/password `vagrant/vagrant` dans Virtual Box
 - Ou utilisez SSH avec le même login/passowrd
 
   - Windows: Utilisez http://www.putty.org et connectez vous à vagrant@127.0.0.1 sur le port 2222.
   - Mac and Linux: $ ssh vagrant@127.0.0.1 -p 2222 -o PreferredAuthentications=password
+
+### Manipulation d'Elasticsearch
 
 - Une fois l'environnement installé, Kibana sera accessible à l'URL [http://localhost:5601](http://localhost:5601)
 
