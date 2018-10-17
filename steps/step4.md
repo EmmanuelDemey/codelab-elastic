@@ -32,3 +32,4 @@ ansible-playbook 4_configure-packetbeat.yml
 ```
 
 - Visualiser les données depuis Kibana, ainsi que les dashboards automatiquement créés pour pour les requêtes HTTP.
+

@@ -74,3 +74,4 @@ GET /person/_search
   - Combiner toutes ces nouvelles visualisation dans un dashboard
 
 - Depuis l'interface, activez le Monitoring pour Elasticsearch. Par la suite, nous l'activerons également pour l'ensemble de la suite Elastic. Vous pouvez visualiser les dashboards de Monitoring, visitez la page [http://localhost:5601/app/monitoring#/overview](http://localhost:5601/app/monitoring#/overview)
+
